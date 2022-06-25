@@ -3,14 +3,14 @@ import os
 
 def json_ext(path, flag):
     if flag is 'train':
-        dataset_path = os.path.join(path, 'clean_trainset_wav')
+        dataset_path = os.path.join(path, 'trainset_clean')
         json_path = os.path.join(path, 'Json', 'train')
         os.makedirs(json_path, exist_ok=True)
     else:
-        dataset_path = os.path.join(path, 'clean_testset_wav')
+        dataset_path = os.path.join(path, 'valset_clean')
         json_path = os.path.join(path, 'Json', 'dev')
         os.makedirs(json_path, exist_ok=True)
-    print(dataset_path)    
+    print(dataset_path)
     data_dir = os.listdir(dataset_path)
     data_dir.sort()
     data_num = len(data_dir)
@@ -25,7 +25,7 @@ def json_ext(path, flag):
         json.dump(data_list, f, indent=4)
 
 
-path = '/home/yuguochen/CYCLEGAN-ATT-UNET/data/'
+path = 'datasets/vctk_16khz/resampled/'
 json_ext(path, flag='train')
 json_path = os.path.join(path, 'Json', 'train')
 json_ext(path, flag='dev')

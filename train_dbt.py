@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from data_vb import TrainDataset, CvDataset, TrainDataLoader, CvDataLoader * #根据在哪个数据集 自己改相关设置 vb wsj dns需要在data中做一定改变
+from data_vb import TrainDataset, CvDataset, TrainDataLoader, CvDataLoader #根据在哪个数据集 自己改相关设置 vb wsj dns需要在data中做一定改变
 from solver_vb import Solver  #根据在哪个数据集 自己改相关设置 vb dns 或者wsj
 from Backup import numParams
 

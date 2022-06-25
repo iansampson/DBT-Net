@@ -11,8 +11,8 @@ conti_path = './CP_dir/checkpoint_early_exit_16th.pth.tar'
 is_pesq = True
 
 # server parameter settings
-json_dir = '/home/yuguochen/CYCLEGAN-ATT-UNET/data/Json'
-file_path = '/home/yuguochen/vbdataset'
+json_dir = 'datasets/vctk_16khz/resampled/Json/'
+file_path = 'datasets/vctk_16khz/resampled/'
 loss_dir = './LOSS/aia_internew_vb.mat'
 batch_size = 2
 epochs = 80
