@@ -11,7 +11,7 @@ import json
 import os
 #import h5py
 import numpy as np
-#from pesq import pesq
+from pesq import pesq
 from joblib import Parallel, delayed
 from scipy import signal
 import sys
@@ -97,7 +97,7 @@ def pesq_loss(esti_list, label_list, frame_list):
 def eval_pesq(id, esti_utts, clean_utts):
     clean_utt = clean_utts[id]
     esti_utt = esti_utts[id]
-    #pesq_score = pesq(16000, clean_utt, esti_utt, 'wb')
+    pesq_score = pesq(16000, clean_utt, esti_utt, 'wb')
     #pesq_score = pesq(clean_utt, esti_utt, fs=16000)
     
-    #return pesq_score
+    return pesq_score
