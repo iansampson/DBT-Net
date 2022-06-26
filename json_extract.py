@@ -25,7 +25,7 @@ def json_ext(path, flag):
         json.dump(data_list, f, indent=4)
 
 
-path = 'datasets/vctk_16khz/resampled/'
+path = 'datasets/vctk_16khz/'
 json_ext(path, flag='train')
 json_path = os.path.join(path, 'Json', 'train')
 json_ext(path, flag='dev')
