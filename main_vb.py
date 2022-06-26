@@ -2,7 +2,7 @@ import argparse
 from aia_trans import aia_complex_trans_mag, dual_aia_trans_merge_crm
 from train_dbt import main #根据在哪个数据集 自己改相关设置
 from config_vb import * #根据在哪个数据集 自己改相关设置
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 
 parser = argparse.ArgumentParser("gated complex convolutional recurrent neural network")
 parser.add_argument('--json_dir', type=str, default=json_dir,
