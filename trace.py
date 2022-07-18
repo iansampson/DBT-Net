@@ -6,6 +6,7 @@ from coremltools.converters.mil.frontend.torch.torch_op_registry import _TORCH_O
 from coremltools.converters.mil.frontend.torch.ops import _get_inputs
 from coremltools.converters.mil import Builder as mb
 from aia_trans import dual_aia_trans_merge_crm, aia_complex_trans_mag, aia_complex_trans_ri
+import time
 
 @register_torch_op
 def atan2(context, node):
@@ -52,13 +53,34 @@ model.load_state_dict(checkpoint)
 model.eval()
 
 with torch.no_grad():
-  input = torch.rand([1, 2, 401, 161])
-  traced_model = torch.jit.trace(model, input)
+    # Create random input
+    input = torch.rand([1, 2, 401, 161])
 
-  model = ct.convert(
+    # Trace model
+    traced_model = torch.jit.trace(model, input)
+    torch.jit.save(traced_model, "coreml/dbt-net_aia_merge_dns300.pt")
+
+    # Convert model to CoreML
+    ml_model = ct.convert(
     traced_model,
     convert_to="mlprogram",
     inputs=[ct.TensorType(shape=input.shape)])
-    # compute_units=ct.precision.Float32
-  # model_compressed = ct.compression_utils.affine_quantize_weights(model)
-  model.save("dpt-net_aia_merge_dns300.mlpackage")
+    ml_model.save("coreml/dbt-net_aia_merge_dns300.mlpackage")
+
+    # Measure prediction time for original model
+    t0 = time.process_time()
+    output = model(input)
+    t1 = time.process_time()
+    print("Prediction time for original model: ", t1 - t0)
+
+    # Measure prediction time for traced model
+    t0 = time.process_time()
+    output = traced_model(input)
+    t1 = time.process_time()
+    print("Prediction time for traced model: ", t1 - t0)
+
+    # Measure prediction time for CoreML model
+    t0 = time.process_time()
+    ml_output = ml_model.predict({"x_1": input.numpy()})
+    t1 = time.process_time()
+    print("Prediction time for CoreML model: ", t1 - t0)
