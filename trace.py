@@ -1,4 +1,6 @@
 # import yaml
+import os
+import time
 import numpy as np
 import torch
 import coremltools as ct
@@ -6,7 +8,6 @@ from coremltools.converters.mil.frontend.torch.torch_op_registry import _TORCH_O
 from coremltools.converters.mil.frontend.torch.ops import _get_inputs
 from coremltools.converters.mil import Builder as mb
 from aia_trans import dual_aia_trans_merge_crm, aia_complex_trans_mag, aia_complex_trans_ri
-import time
 
 @register_torch_op
 def atan2(context, node):
@@ -55,6 +56,9 @@ model.eval()
 with torch.no_grad():
     # Create random input
     input = torch.rand([1, 2, 401, 161])
+
+    # Create the output directory if needed
+    os.makedirs("coreml", exist_ok=True)
 
     # Trace model
     traced_model = torch.jit.trace(model, input)
